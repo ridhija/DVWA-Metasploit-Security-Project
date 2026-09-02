@@ -71,9 +71,7 @@ DistCC Port     : 3632
 
 
 
-
-
-🔍 Part 1 — DVWA Vulnerability Assessment
+###🔍 Part 1 — DVWA Vulnerability Assessment
 
 DVWA (Damn Vulnerable Web Application) was used to practice different categories of web application vulnerabilities.
 
@@ -93,6 +91,7 @@ JavaScript Attacks
 CSP Bypass
 Blind SQL Injection
 Authorisation Bypass
+
 🔹 Command Injection
 
 Command Injection testing was performed through the DVWA Command Injection module.
@@ -107,20 +106,22 @@ The response demonstrated command execution in the web-server context.
 
 Evidence:
 
-🔹 Other DVWA Findings
+###🔹 Other DVWA Findings
 File Inclusion
 
 The File Inclusion module was tested by accessing a local system file such as:
 
 /etc/passwd
-SQL Injection
+
+###SQL Injection
 
 SQL Injection was demonstrated using a test input that altered the intended SQL query and returned multiple records.
 
 Example:
 
 1' OR '1'='1
-Cross-Site Scripting
+
+###Cross-Site Scripting
 
 The following XSS categories were tested:
 
