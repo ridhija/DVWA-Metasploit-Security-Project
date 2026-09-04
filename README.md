@@ -1,5 +1,3 @@
-# DVWA-Metasploit-Security-Project
-A hands-on cybersecurity project demonstrating DVWA vulnerability assessment and DistCC Remote Code Execution using Metasploit in a controlled Docker lab environment.
 # DVWA Vulnerability Assessment and DistCC Remote Code Execution using Metasploit
 
 ## 📌 Project Overview
@@ -11,7 +9,7 @@ The project is divided into two major parts:
 1. **DVWA Vulnerability Assessment**
 2. **DistCC Remote Code Execution using Metasploit**
 
-The objective is to understand common web application vulnerabilities, perform basic security testing, identify vulnerable services, and demonstrate controlled remote command execution using the Metasploit Framework.
+The objective is to understand common web application vulnerabilities, perform security testing, identify vulnerable services, and demonstrate controlled remote command execution using the Metasploit Framework.
 
 > ⚠️ **Disclaimer:** All testing in this project was performed in a controlled and isolated laboratory environment for educational purposes. No unauthorized systems were targeted.
 
@@ -62,37 +60,40 @@ The project was performed using Docker containers connected through an isolated 
 
 The Metasploit and Metasploitable2 containers were connected through a custom Docker bridge network.
 
-Example lab addresses:
+Example laboratory addresses:
 
 ```text
 Metasploitable2 : 172.19.0.2
 Metasploit      : 172.19.0.3
 DistCC Port     : 3632
+```
 
+---
 
-
-###🔍 Part 1 — DVWA Vulnerability Assessment
+# 🔍 Part 1 — DVWA Vulnerability Assessment
 
 DVWA (Damn Vulnerable Web Application) was used to practice different categories of web application vulnerabilities.
 
 The following vulnerabilities were tested in the controlled environment:
 
-Command Injection
-File Inclusion
-SQL Injection
-Reflected XSS
-Stored XSS
-DOM XSS
-File Upload
-Weak Session IDs
-Open HTTP Redirect
-Cryptography Problems
-JavaScript Attacks
-CSP Bypass
-Blind SQL Injection
-Authorisation Bypass
+- Command Injection
+- File Inclusion
+- SQL Injection
+- Reflected XSS
+- Stored XSS
+- DOM XSS
+- File Upload
+- Weak Session IDs
+- Open HTTP Redirect
+- Cryptography Problems
+- JavaScript Attacks
+- CSP Bypass
+- Blind SQL Injection
+- Authorisation Bypass
 
-🔹 Command Injection
+---
+
+## 🔹 Command Injection
 
 Command Injection testing was performed through the DVWA Command Injection module.
 
@@ -100,70 +101,127 @@ A test input was used to demonstrate that operating-system commands could be exe
 
 Example:
 
+```text
 127.0.0.1; whoami
+```
 
 The response demonstrated command execution in the web-server context.
 
-Evidence:
+### Evidence
 
-###🔹 Other DVWA Findings
-File Inclusion
+![DVWA Command Injection](Screenshots/01_DVWA_Command_Injection.png)
 
-The File Inclusion module was tested by accessing a local system file such as:
+---
 
-/etc/passwd
+## 🔹 File Inclusion
 
-###SQL Injection
-
-SQL Injection was demonstrated using a test input that altered the intended SQL query and returned multiple records.
+The File Inclusion module was tested by accessing a local system file.
 
 Example:
 
+```text
+/etc/passwd
+```
+
+The test demonstrated the impact of insecure file inclusion functionality in the vulnerable application.
+
+---
+
+## 🔹 SQL Injection
+
+SQL Injection was demonstrated using a test input that altered the intended SQL query and returned multiple user records.
+
+Example:
+
+```text
 1' OR '1'='1
+```
 
-###Cross-Site Scripting
+The result demonstrated how improper input handling can allow an attacker to manipulate a database query.
 
-The following XSS categories were tested:
+---
 
-Reflected XSS
-Stored XSS
-DOM XSS
+## 🔹 Cross-Site Scripting (XSS)
 
-Browser alert evidence was used to verify successful execution.
+Different categories of Cross-Site Scripting were tested:
 
-File Upload
+- Reflected XSS
+- Stored XSS
+- DOM XSS
 
-The File Upload functionality was tested to understand insecure upload behavior.
+Browser-side execution was observed during testing.
 
-Weak Session IDs
+The testing demonstrated how insufficient input validation and output encoding can allow malicious scripts to execute in a user's browser.
 
-Session identifiers were generated and inspected to understand weaknesses in predictable session management.
+---
 
-Open HTTP Redirect
+## 🔹 File Upload
 
-The application was tested for redirection to an external destination.
+The File Upload functionality was tested to understand insecure file upload behavior.
 
-Cryptography Problems
+The test demonstrated the importance of validating uploaded files, file types, extensions, and server-side execution permissions.
 
-The cryptography functionality was tested using plaintext and encoded output.
+---
 
-JavaScript Attacks
+## 🔹 Weak Session IDs
 
-Client-side JavaScript behavior was analyzed through the vulnerable module.
+The Weak Session IDs module was tested by generating session identifiers and inspecting their values.
 
-CSP Bypass
+The test helped demonstrate the security risks associated with predictable session identifiers and weak session management.
 
-Content Security Policy behavior was tested and browser-side execution was observed.
+---
 
-Blind SQL Injection
+## 🔹 Open HTTP Redirect
 
-Boolean-style responses were used to determine whether a supplied condition was true or false.
+The Open HTTP Redirect functionality was tested by supplying an external destination.
 
-Authorisation Bypass
+The test demonstrated how improper URL validation can allow an application to redirect users to an attacker-controlled or untrusted destination.
 
-The application was tested to understand whether restricted functionality could be accessed or modified without appropriate authorization.
+---
 
-🌐 Part 2 — Network Enumeration
+## 🔹 Cryptography Problems
+
+The Cryptography Problems module was tested using plaintext and encoded output.
+
+The test helped demonstrate why weak or improperly implemented cryptographic mechanisms can expose sensitive information.
+
+---
+
+## 🔹 JavaScript Attacks
+
+The JavaScript Attacks module was tested to understand client-side validation and JavaScript-based security weaknesses.
+
+The source code and browser behavior were also inspected during testing.
+
+---
+
+## 🔹 CSP Bypass
+
+The Content Security Policy (CSP) functionality was tested to understand how security policies can be bypassed when they are incorrectly configured.
+
+Browser execution and network behavior were observed during the test.
+
+---
+
+## 🔹 Blind SQL Injection
+
+The Blind SQL Injection module was tested using Boolean-based conditions.
+
+Different responses were observed depending on whether the supplied condition was true or false.
+
+This demonstrated how information can sometimes be inferred from application behavior even when database errors or query results are not directly displayed.
+
+---
+
+## 🔹 Authorisation Bypass
+
+The Authorisation Bypass functionality was tested to understand whether restricted actions could be accessed without appropriate authorization.
+
+The test demonstrated the importance of proper server-side authorization checks.
+
+---
+
+# 🌐 Part 2 — Network Enumeration
 
 After the DVWA assessment, Docker containers and exposed services were examined.
 
@@ -171,131 +229,265 @@ Nmap was used for network and service enumeration.
 
 Example:
 
+```bash
 nmap -sV 127.0.0.1
+```
 
 The exposed web service was identified and further testing was performed inside the controlled Docker environment.
 
-Evidence:
+### Evidence
 
-💻 Part 3 — DistCC Vulnerability Assessment
+![Docker and Nmap Enumeration](Screenshots/02_Docker_Nmap_Enumeration.png)
 
-Metasploitable2 was deployed as an intentionally vulnerable target.
+---
 
-The DistCC service was found running on:
+# 💻 Part 3 — Metasploitable2 and DistCC
 
-TCP 3632
+Metasploitable2 was deployed as an intentionally vulnerable target inside the isolated Docker laboratory.
 
-Connectivity was verified using Netcat:
+The DistCC service was identified as running on TCP port:
 
+```text
+3632
+```
+
+Connectivity to the service was verified using Netcat.
+
+Example:
+
+```bash
 nc -vz -w 3 172.19.0.2 3632
+```
 
-The port was confirmed to be open.
+The port was confirmed to be open and reachable from the Metasploit environment.
 
-⚡ Part 4 — Metasploit DistCC Testing
+---
+
+# ⚡ Part 4 — Metasploit DistCC Vulnerability Testing
 
 The Metasploit Framework was used to validate the vulnerable DistCC service.
 
-The following module was selected:
+The following Metasploit module was selected:
 
+```text
 exploit/unix/misc/distcc_exec
+```
 
-The target was then configured with the appropriate laboratory network parameters.
+The target was configured with the laboratory network parameters.
 
-Configuration
+### Configuration
+
+```text
 RHOSTS = 172.19.0.2
 RPORT  = 3632
 LHOST  = 172.19.0.3
 LPORT  = 4444
+```
 
-The vulnerability check confirmed that the target was vulnerable.
+The `check` command was used to determine whether the target was vulnerable.
 
-Evidence:
+The vulnerability check confirmed that the DistCC service was vulnerable to remote command execution.
 
-🔐 Part 5 — Remote Code Execution
+### Evidence
 
-An initial reverse Bash payload was tested but failed because the target environment did not support the required /dev/tcp functionality.
+![Metasploit DistCC Vulnerability Check](Screenshots/03_Metasploit_DistCC_Vulnerability_Check.png)
 
-The payload was changed to:
+---
 
+# 🔐 Part 5 — Remote Code Execution
+
+The project demonstrated **Remote Code Execution (RCE)** through the vulnerable DistCC service.
+
+An initial reverse Bash payload was tested, but it failed because the target environment did not support the required `/dev/tcp` functionality.
+
+A compatible Perl-based reverse payload was then selected:
+
+```text
 cmd/unix/reverse_perl
+```
 
-The revised payload successfully established a command shell in the controlled laboratory environment.
+After configuring the payload and listener parameters correctly, a command shell was successfully established in the controlled laboratory environment.
 
-✅ Shell Verification
+---
 
-After obtaining the shell, basic commands were executed to verify access.
+# 🖥️ Part 6 — Successful Remote Shell
 
-Command
+After obtaining the shell, basic Linux commands were executed to verify access to the target.
+
+### `whoami`
+
+```bash
 whoami
+```
 
 Result:
 
+```text
 daemon
-Command
+```
+
+This confirmed the user context of the obtained shell.
+
+### `id`
+
+```bash
 id
+```
 
-The command confirmed the user and group information of the shell.
+The command displayed the user ID, group ID, and group membership associated with the shell.
 
-Command
+### `hostname`
+
+```bash
 hostname
+```
 
-The target hostname was displayed.
+The command displayed the hostname of the target system.
 
-Evidence:
+### Evidence
 
-📊 Results
+![Successful Metasploit Remote Shell](Screenshots/04_Metasploit_Successful_Remote_Shell.png)
 
-The project successfully demonstrated:
+---
 
-Multiple DVWA web application vulnerabilities.
-Network and service enumeration.
-Identification of the DistCC service.
-Validation of DistCC vulnerability using Metasploit.
-Successful Remote Code Execution in the controlled lab.
-Establishment of a command shell.
-Verification of shell access using whoami, id, and hostname.
-🧠 Key Learning Outcomes
+# 📊 Results and Observations
 
-Through this project, I learned:
+The project successfully demonstrated the following:
 
-How vulnerable web applications can be tested safely.
-How to perform basic network enumeration.
-How Docker can be used to create isolated cybersecurity labs.
-How Metasploit modules are selected and configured.
-How payload compatibility affects exploitation.
-How to troubleshoot failed payloads.
-How to verify a successful remote shell.
-The importance of authorization and controlled environments during security testing.
-⚠️ Challenges Faced
+- Multiple vulnerabilities were identified and tested in DVWA.
+- Network and service enumeration was performed using Nmap.
+- Docker was used to create an isolated cybersecurity testing environment.
+- The DistCC service running on TCP port 3632 was identified.
+- Connectivity to the DistCC service was verified.
+- Metasploit was used to validate the DistCC vulnerability.
+- The initial reverse Bash payload failed because of target environment limitations.
+- A compatible Perl-based payload was successfully used.
+- Remote Code Execution was demonstrated in the controlled laboratory.
+- A command shell was successfully obtained.
+- Shell access was verified using `whoami`, `id`, and `hostname`.
 
-Some challenges encountered during the project included:
+---
 
-DVWA initially displayed a CSRF-related login/setup issue.
-The first reverse Bash payload failed because of target environment limitations.
-A compatible Perl-based reverse payload was required.
-Docker networking and container IP addresses had to be verified.
-Metasploit sessions required correct backgrounding and interaction.
-Port connectivity had to be verified before exploitation.
+# 🧠 Key Learning Outcomes
 
-These issues helped improve troubleshooting and practical cybersecurity skills.
+Through this project, I gained practical experience in:
 
-📚 References
-Metasploit Framework Documentation
-DVWA Documentation / Repository
-OWASP Web Security Resources
-Nmap Documentation
-NVD — CVE-2004-2687
-DistCC Security Information
-👩‍💻 Author
+- Web application vulnerability assessment.
+- Network and service enumeration.
+- Docker-based cybersecurity lab setup.
+- Vulnerability identification and validation.
+- Metasploit Framework usage.
+- Exploit module selection.
+- Payload selection and configuration.
+- Troubleshooting failed payloads.
+- Reverse shell concepts.
+- Remote Code Execution concepts.
+- Basic post-exploitation shell verification.
+- Ethical and controlled security testing.
 
-Ridhi Jain
+---
 
-Domain: Cyber Security / Ethical Hacking & Pentration Testing
+# ⚠️ Challenges Faced
 
-Project: DVWA Vulnerability Assessment and DistCC Remote Code Execution using Metasploit
+Several challenges were encountered during the project:
 
-⭐ Conclusion
+### 1. DVWA Setup / CSRF Issue
 
-This project provided practical experience in vulnerability assessment, network enumeration, exploitation methodology, payload selection, troubleshooting, and remote shell verification.
+During the initial DVWA setup, a CSRF-related error was encountered. The application environment and setup configuration were checked before continuing with the vulnerability testing.
 
-The complete work was performed in a controlled Docker laboratory environment to understand cybersecurity concepts safely and ethically.
+### 2. Reverse Bash Payload Failure
+
+The initial reverse Bash payload did not work because the target environment did not provide the required `/dev/tcp` functionality.
+
+A different compatible payload was therefore selected.
+
+### 3. Payload Compatibility
+
+The `cmd/unix/reverse_perl` payload was selected because it was compatible with the target environment.
+
+### 4. Docker Networking
+
+The IP addresses of the Docker containers had to be identified and verified to ensure communication between the Metasploit environment and Metasploitable2.
+
+### 5. Metasploit Session Handling
+
+Understanding how to background and interact with Metasploit sessions was another practical challenge during the testing process.
+
+These challenges helped improve troubleshooting and practical cybersecurity skills.
+
+---
+
+# 📁 Project Structure
+
+```text
+DVWA-Metasploit-Security-Project/
+│
+├── README.md
+│
+├── Project_Presentation/
+│   └── Ridhi_Jain_DVWA_Metasploit_Project_Presentation.pptx
+│
+├── Screenshots/
+│   ├── 01_DVWA_Command_Injection.png
+│   ├── 02_Docker_Nmap_Enumeration.png
+│   ├── 03_Metasploit_DistCC_Vulnerability_Check.png
+│   └── 04_Metasploit_Successful_Remote_Shell.png
+│
+└── Project_Report/
+    └── Ridhi_Jain_DVWA_Metasploit_Project_Report.pdf
+```
+
+---
+
+# 📸 Project Evidence
+
+The repository contains selected screenshots demonstrating the major stages of the project:
+
+1. DVWA Command Injection testing
+2. Docker and Nmap enumeration
+3. Metasploit DistCC vulnerability validation
+4. Successful Metasploit remote shell
+
+Additional screenshots and detailed evidence are available in the project report and presentation.
+
+---
+
+# 📚 References
+
+- Metasploit Framework Documentation
+- DVWA (Damn Vulnerable Web Application)
+- OWASP Web Security Resources
+- Nmap Documentation
+- NVD — CVE-2004-2687
+- DistCC Security Information
+
+---
+
+# 👩‍💻 Author
+
+**Ridhi Jain**
+
+**Domain:** Cyber Security / Network Security
+
+**Project Title:**  
+**DVWA Vulnerability Assessment and DistCC Remote Code Execution using Metasploit**
+
+---
+
+# ⚖️ Ethical Use Disclaimer
+
+This project was created strictly for educational and cybersecurity learning purposes.
+
+All vulnerability testing and exploitation activities were performed against intentionally vulnerable applications and systems inside a controlled laboratory environment.
+
+The techniques demonstrated in this repository should only be used on systems for which proper authorization has been obtained.
+
+---
+
+# ✅ Conclusion
+
+This project provided practical experience in vulnerability assessment, web application security testing, network enumeration, Metasploit usage, exploit validation, payload selection, troubleshooting, and remote shell verification.
+
+By combining DVWA, Docker, Metasploitable2, Kali Linux, Nmap, and Metasploit, the project demonstrated a complete cybersecurity testing workflow in a safe and controlled environment.
+
+The project also highlighted the importance of proper security controls, secure configuration, input validation, authorization, session management, and responsible vulnerability testing.
