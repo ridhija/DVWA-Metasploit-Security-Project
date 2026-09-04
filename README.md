@@ -109,7 +109,7 @@ The response demonstrated command execution in the web-server context.
 
 ### Evidence
 
-![DVWA Command Injection](Screenshots/01_DVWA_Command_Injection.png)
+![DVWA Command Injection](01_DVWA_Command_Injection.png)
 
 ---
 
@@ -237,7 +237,7 @@ The exposed web service was identified and further testing was performed inside 
 
 ### Evidence
 
-![Docker and Nmap Enumeration](Screenshots/02_Docker_Nmap_Enumeration.png)
+![Docker and Nmap Enumeration](02_Docker_Nmap_Enumeration.png)
 
 ---
 
@@ -290,7 +290,7 @@ The vulnerability check confirmed that the DistCC service was vulnerable to remo
 
 ### Evidence
 
-![Metasploit DistCC Vulnerability Check](Screenshots/03_Metasploit_DistCC_Vulnerability_Check.png)
+![Metasploit DistCC Vulnerability Check](03_Metasploit_DistCC_Vulnerability_Check.png)
 
 ---
 
@@ -346,7 +346,7 @@ The command displayed the hostname of the target system.
 
 ### Evidence
 
-![Successful Metasploit Remote Shell](Screenshots/04_Metasploit_Successful_Remote_Shell.png)
+![Successful Metasploit Remote Shell](04_Metasploit_Successful_Remote_Shell.png)
 
 ---
 
